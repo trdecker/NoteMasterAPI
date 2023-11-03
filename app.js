@@ -14,6 +14,6 @@ const app = express()
 app.use(express.json())
 app.use('/', apiRoutes)
 
-// app.listen(port, () => {
-//     console.log(`Server is listening on port ${port}`)
-// })
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`)
+})
