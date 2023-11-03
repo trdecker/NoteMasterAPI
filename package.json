@@ -4,8 +4,8 @@
   "description": "Backend for NoteMaster react native application",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "app.js"
+    "build": "node app.js",
+    "test": "node app.js"
   },
   "author": "Tad Decker",
   "license": "ISC",

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const noteSchema = new Schema({
-    id: { type: String, required: true, unique: True },
+    id: { type: String, required: true, unique: true },
     title: String,
     description: String
 },
