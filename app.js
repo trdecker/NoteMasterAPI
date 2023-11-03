@@ -6,9 +6,10 @@ const { connect } = require('./config/database')
 dotenv.config()
 const port = process.env.PORT
 
-connect()
+// connect()
 
 const apiRoutes = require('./routes/apiRoutes')
+const app = express()
 app.use(express.json())
 app.use('/', apiRoutes)
 
