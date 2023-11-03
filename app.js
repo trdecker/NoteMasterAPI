@@ -6,7 +6,7 @@ const apiRoutes = require('./src/routes/apiRoutes.js')
 
 
 dotenv.config()
-const port = process.env.PORT
+const port = process.env.PORT ?? 3000
 
 // connect()
 
