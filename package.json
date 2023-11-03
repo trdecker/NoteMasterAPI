@@ -1,0 +1,17 @@
+{
+  "name": "notemasterapi",
+  "version": "1.0.0",
+  "description": "Backend for NoteMaster react native application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tad Decker",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/cosmos": "^4.0.0",
+    "express": "^4.18.2",
+    "mongoose": "^5.13.16"
+  }
+}

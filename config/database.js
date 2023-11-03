@@ -5,23 +5,17 @@ const mongoose = require('mongoose')
 const { CosmosClient } = require('@azure/cosmos')
 
 const URI = process.env.URI
+const key = process.env.key
+const databaseName = process.env.databaseName
+const containerName = process.env.containerName
 
-function connect() {
-    mongoose.connect(URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
+const client = new CosmosClient({ URI, key })
 
-    mongoose.connection.on('connected', () => {
-        console.log(`Mongoose connected to ${URI}`)
-    })
-
-    mongoose.connection.on('disconnected', () => {
-        console.log(`Mongoose disconnected`)
-    })
-}
+const database = client.database(database)
+const container = database.container(container)
 
 module.exports = {
-    connect,
+    database,
+    container,
     mongoose
 }
