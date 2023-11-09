@@ -1,11 +1,12 @@
-const express = require('express')
+import express from 'express'
+import notesController from '../controllers/noteController.js'
+
 const router = express.Router()
-const noteController = require('../controllers/noteController')
 
 router.get('/', (req, res) => {
     res.send('Hello world!')
 })
 
-router.get('/getNotes', noteController.getNotes)
+router.get('/allNotes', notesController.getAllNotes)
 
-module.exports = router
+export default router

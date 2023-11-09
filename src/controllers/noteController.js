@@ -1,18 +1,13 @@
-const Note = require('../models/noteModel')
+import Note from '../services/noteService.js'
 
-function getNotes() {
-    const docQuery = Note.find({})
-    docQuery
-        .exec()
-        .then(notes => {
-            res.status(200).json(notes)
-        })
-        .catch(error => {
-            res.status(500).send(error)
-            return
-        })
+const notesController = {
+    async getAllNotes(req, res) {
+        const notes = await Note.getAllNotes()
+        const json = {
+            notes: notes
+        }
+        res.json(notes)
+    }
 }
 
-module.exports = {
-    getNotes
-}
+export default notesController

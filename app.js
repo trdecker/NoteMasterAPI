@@ -1,12 +1,9 @@
-const express = require('express')
-const dotenv = require('dotenv')
-// const { connect } = require('./config/database')
-const apiRoutes = require('./src/routes/apiRoutes.js')
+import express from 'express'
+import dotenv from 'dotenv'
+import apiRoutes from './src/routes/apiRoutes.js'
 
 dotenv.config()
 const port = process.env.PORT ?? 80
-
-// connect()
 
 const app = express()
 app.use(express.json())
