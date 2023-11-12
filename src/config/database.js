@@ -36,12 +36,19 @@ export async function getItem(id) {
 }
 
 /**
- * Get every item in the whole container.
- * @returns every item
+ * Get the notes belonging to a user
+ * @param {String} userId 
+ * @returns List of items associated with user
  */
-export async function getAllItems() {
+export async function getUserNotes(userId) {
     const querySpec = {
-        query: 'select * from c'
+        query: 'select * from c where c.userId = @userId',
+        parameters: [
+            {
+                name: '@userId',
+                value: userId
+            }
+        ]
     }
     const { resources: items } = await container.items.query(querySpec).fetchAll()
     return items
@@ -52,7 +59,7 @@ export async function getAllItems() {
  * @param {Object} newItem 
  * @returns savedItem
  */
-export async function createItem(newItem) {
+export async function createNote(newItem) {
     const { resource: savedItem } = await container.items.create(newItem)
     return savedItem
 }
@@ -62,10 +69,10 @@ export async function createItem(newItem) {
  * @param {String} itemId 
  * @param {Object} updatedItem 
  */
-export async function editItem(itemId, updatedItem) {
+export async function editNote(itemId, updatedItem) {
     // const { resource: existingItem } = await container.item(itemId).read() // Skip this part?
-    const { resource: replacedItem } = await container.item(item.id).replace(updatedItem)
-    console.log(replacedItem)
+    const { resource: replacedItem } = await container.item(itemId).replace(updatedItem)
+    return replacedItem
 }
 
 /**
@@ -73,7 +80,7 @@ export async function editItem(itemId, updatedItem) {
  * @param {String} itemId 
  * @return Status code
  */
-export async function deleteItem(itemId) {
+export async function deleteNote(itemId) {
     const { statusCode } = await container.item(itemId).delete()
     return statusCode
 }
