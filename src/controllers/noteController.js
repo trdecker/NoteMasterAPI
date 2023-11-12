@@ -18,6 +18,7 @@ const notesController = {
      * @param {Object} res 
      */
     async getNotes(req, res) {
+        console.log('IN GET NOTES')
         try {
             const userId = req.query.userId ?? null
             if (!userId) {

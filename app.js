@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import apiRoutes from './src/routes/apiRoutes.js'
+import cors from 'cors'
 
 dotenv.config()
 const port = process.env.PORT ?? 80
