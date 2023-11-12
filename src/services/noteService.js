@@ -1,3 +1,11 @@
+/**
+ * @file noteService.js
+ * @description Services for interacting with Notes databse
+ * @author Tad Decker
+ * 
+ * 11/11/2023
+ */
+
 import { getUserNotes, createNote, editNote, deleteNote } from '../config/database.js'
 import { generateId } from '../utils/commonUtils.js'
 

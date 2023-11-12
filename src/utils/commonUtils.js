@@ -6,5 +6,5 @@
 export function generateId() {
     const now = Date.now()
     const rand = Math.floor(Math.random() * 10000)
-    return `${now}-${rand}`
+    return `${now}${rand}`
 }
