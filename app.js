@@ -14,6 +14,8 @@ const corsOptions = {
     allowedHeaders: 'Content-Type, Authorization'
 }
 
+app.use(cors(corsOptions))
+
 app.use(express.json())
 app.use('/', apiRoutes)
 
