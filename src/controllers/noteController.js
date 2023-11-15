@@ -2,12 +2,11 @@
  * @file noteController.js
  * @description The controller for the routes found in apiRoutes.js. Includes creating, editting, deleting, and retrieving Notes.
  * @author Tad Decker
- * 11/11/2023
  * 
- * TODO: Check for authorization for every single call
+ * 11/11/2023
  */
 
-import Note from '../services/noteService.js'
+import Note from '../models/noteModel.js'
 import { apiBadRequestError, apiInternalError, apiNotFoundError } from '../utils/apiUtils.js'
 
 const notesController = {
@@ -18,7 +17,6 @@ const notesController = {
      * @param {Object} res 
      */
     async getNotes(req, res) {
-        console.log('IN GET NOTES')
         try {
             const userId = req.query.userId ?? null
             if (!userId) {
@@ -79,7 +77,6 @@ const notesController = {
             }
 
             const editedItem = await Note.editNote(userId, noteId, note)
-            console.log(editedItem)
             res.json(editedItem)
         } catch (e) {
             apiInternalError(res, 'Error editing note', e)

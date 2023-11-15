@@ -1,16 +1,10 @@
-module.exports = {
-    database: {
-        host: 'host',
-        port: 80,
-        username: '',
-        password: '',
-        dbName: ''
-    },
+import dotenv from 'dotenv'
+dotenv.config()
 
-    apiKey: '',
-
-    app: {
-        environment: '',
-        port: 3000
+export default {
+        endpoint: process.env.COSMOS_ENDPOINT,
+        key: process.env.PRIMARY_KEY,
+        databaseName: process.env.DATABASE_NAME,
+        notesContainerName: process.env.NOTES_CONTAINER_NAME,
+        usersContainerName: process.env.USERS_CONTAINER_NAME
     }
-}
