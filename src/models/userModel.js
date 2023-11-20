@@ -9,6 +9,8 @@
 
 import { generateId } from '../utils/commonUtils.js'
 import { CosmosClient } from '@azure/cosmos'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import config from '../config/config.js'
 
 const cosmosClient = new CosmosClient({ 
@@ -19,23 +21,70 @@ const cosmosClient = new CosmosClient({
 const database = cosmosClient.database(config.databaseName)
 const container = database.container(config.usersContainerName)
 
+const saltRounds = 10
+
+/**
+ * @function getUser
+ * @function signup
+ * @function login
+ */
 export default {
 
-    async getUser(userName) {
-
+    /**
+     * @description Get a user based on their username
+     * @param {String} userName 
+     * @returns username
+     */
+    async getUser(username) {
+        const querySpec = {
+            query: 'select * from c where c.username = @username',
+            parameters: [
+                {
+                    name: '@username',
+                    value: username
+                }
+            ]
+        }
+        const { resources: items } = await container.items.query(querySpec).fetchAll()
+        return items
     },
 
     /**
      * @param {String} username
+     * @returns created user (and it should return an authtoken, too)
      */
     async signup(username, password) {
         const userId = generateId()
-        const user = { userId, username, password }
+        const hashedPassword = await bcrypt.hash(password, saltRounds)
+        const user = { userId, username, password: hashedPassword }
         const { resource: createdUser } = await container.items.create(user)
         return createdUser
     },
 
-    login(username, password) {
+    /**
+     * Check a username and password. If it matches, returns an authtoken.
+     * @param {String} username 
+     * @param {String} password 
+     * @returns Authtoken
+     */
+    async login(username, password) {
+        const users = await this.getUser(username)
+        if (users.length == 0) return null // Bad username
 
+        const user = users.at(0)
+
+        const match = await bcrypt.compare(password, user.password)
+        
+        // If the password matches, return the authtoken
+        if (match) {
+            const token = jwt.sign(
+                { userId: user.userId, username: user.username },
+                config.key,
+                { expiresIn: '1h' }
+            )
+            return token
+        }
+
+        return null // Invalid credentials
     }
 }

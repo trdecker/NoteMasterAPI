@@ -9,6 +9,13 @@
 import Note from '../models/noteModel.js'
 import { apiBadRequestError, apiInternalError, apiNotFoundError } from '../utils/apiUtils.js'
 
+
+/**
+ * @function getNotes
+ * @function createNote
+ * @function editNote
+ * @function deleteNote
+ */
 const notesController = {
 
     /**
@@ -48,6 +55,19 @@ const notesController = {
                 apiBadRequestError(res, 'Body required')
                 return
             }
+
+            if (!newNote.title) {
+                apiBadRequestError(res, 'title is a required field in the body')
+                return
+            }
+
+            if (!newNote.body) {
+                apiBadRequestError(res, 'body is a required field in the body')
+                return
+            }
+
+            // Check authorization
+
 
             const createdItem = await Note.createNote(userId, newNote)
             res.json(createdItem)

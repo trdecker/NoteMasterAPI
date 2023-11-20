@@ -8,6 +8,10 @@ export function apiBadRequestError(res, errorMessage) {
     res.status(400).send(errorMessage)
 }
 
+export function apiForbiddenError(res, errorMessage) {
+    res.status(403).send(errorMessage)
+}
+
 /**
  * Send a 404 error, along with an error message.
  * @param {Object} res 
