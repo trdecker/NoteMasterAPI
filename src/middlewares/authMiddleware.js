@@ -11,7 +11,11 @@ export function requireAuth (req, res, next) {
   
     try {
       const decoded = jwt.verify(token.replace('Bearer ', ''), config.key)  
-      req.user = decoded
+      req.user = {
+        userId: decoded.userId,
+        username: decoded.username
+      }
+
       next()
     } catch (error) {
       // Invalid token, respond with an error

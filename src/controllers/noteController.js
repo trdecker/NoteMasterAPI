@@ -7,7 +7,7 @@
  */
 
 import Note from '../models/noteModel.js'
-import { apiBadRequestError, apiInternalError, apiNotFoundError } from '../utils/apiUtils.js'
+import { apiBadRequestError, apiForbiddenError, apiInternalError, apiNotFoundError } from '../utils/apiUtils.js'
 
 
 /**
@@ -25,17 +25,23 @@ const notesController = {
      */
     async getNotes(req, res) {
         try {
-            const userId = req.query.userId ?? null
+            const { userId, username } = req.user
+            const requestedUserId = req.query.userId ?? null
+
+            if (userId !== requestedUserId) {
+                apiForbiddenError(res, 'Forbidden')
+                return
+            }
+
+            // Return error if userId isn't found
             if (!userId) {
                 apiNotFoundError(res, 'userId not found')
                 return
             }
 
             const notes = await Note.getUserNotes(userId)
-            const json = {
-                notes: notes
-            }
-            res.json(json)
+
+            res.json({ notes })
         } catch (e) {
             apiInternalError(res, 'Error getting notes', e)
         }

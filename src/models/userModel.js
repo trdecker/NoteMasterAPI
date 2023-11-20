@@ -57,8 +57,14 @@ export default {
         const userId = generateId()
         const hashedPassword = await bcrypt.hash(password, saltRounds)
         const user = { userId, username, password: hashedPassword }
-        const { resource: createdUser } = await container.items.create(user)
-        return createdUser
+        await container.items.create(user)
+        const token = jwt.sign(
+            { userId: userId, username },
+            config.key,
+            { expiresIn: '3hr'}
+        )
+        
+        return {username, userId, token}
     },
 
     /**
@@ -80,9 +86,10 @@ export default {
             const token = jwt.sign(
                 { userId: user.userId, username: user.username },
                 config.key,
-                { expiresIn: '1h' }
+                { expiresIn: '3h' }
             )
-            return token
+            
+            return { username, userId: user.userId, token }
         }
 
         return null // Invalid credentials

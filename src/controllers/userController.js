@@ -26,15 +26,14 @@ const userController = {
 
         // If a username already exists, return a 403
         const users = await userModel.getUser(username)
-        console.log(users)
 
         if (users.length > 0) {
             apiForbiddenError(res, 'Username already exists.')
             return
         }
 
-        await userModel.signup(username, password)
-        res.send('User signed up!')
+        const result = await userModel.signup(username, password)
+        res.json(result)
     },
 
     async login(req, res) {
@@ -51,10 +50,10 @@ const userController = {
             return
         }
         
-        const authToken = await userModel.login(username, password)
+        const token = await userModel.login(username, password)
 
-        if (authToken) {
-            res.json({ authToken })
+        if (token) {
+            res.json({ token })
         }
         else {
             apiForbiddenError(res, 'Invalid credentials')
