@@ -50,10 +50,10 @@ const userController = {
             return
         }
         
-        const token = await userModel.login(username, password)
+        const result = await userModel.login(username, password)
 
-        if (token) {
-            res.json({ token })
+        if (result) {
+            res.json(result)
         }
         else {
             apiForbiddenError(res, 'Invalid credentials')

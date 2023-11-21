@@ -71,7 +71,7 @@ export default {
      * Check a username and password. If it matches, returns an authtoken.
      * @param {String} username 
      * @param {String} password 
-     * @returns Authtoken
+     * @returns username, userId, and authtoken, OR null
      */
     async login(username, password) {
         const users = await this.getUser(username)

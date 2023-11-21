@@ -106,6 +106,17 @@ const notesController = {
                 apiBadRequestError(res, 'Body required')
                 return
             }
+
+            if (!note.title) {
+                apiBadRequestError(res, 'title is a required field in the body')
+                return
+            }
+
+            if (!note.body) {
+                apiBadRequestError(res, 'body is a required field in the body')
+                return
+            }
+
             if (!userId) {
                 apiBadRequestError(res, 'User ID required')
                 return
@@ -125,7 +136,6 @@ const notesController = {
     async deleteNote(req, res) {
         try {
             const { userId } = req.user
-
             const requestedUserId = req.query.userId
             const noteId = req.query.noteId
         
