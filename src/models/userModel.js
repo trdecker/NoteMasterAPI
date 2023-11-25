@@ -14,7 +14,7 @@ import jwt from 'jsonwebtoken'
 import config from '../config/config.js'
 
 const cosmosClient = new CosmosClient({ 
-    endpoint: config.endpoint, 
+    endpoint: config.endpoint,
     key: config.key
 })
 

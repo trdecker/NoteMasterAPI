@@ -6,7 +6,7 @@
  * 11/11/2023
  */
 
-import Note from '../models/noteModel.js'
+import noteModel from '../models/noteModel.js'
 import { apiBadRequestError, apiForbiddenError, apiInternalError, apiNotFoundError } from '../utils/apiUtils.js'
 
 
@@ -40,7 +40,7 @@ const notesController = {
                 return
             }
 
-            const notes = await Note.getUserNotes(userId)
+            const notes = await noteModel.getUserNotes(userId)
 
             res.json({ notes })
         } catch (e) {
@@ -80,40 +80,60 @@ const notesController = {
                 return
             }
 
-            const createdItem = await Note.createNote(userId, newNote)
+            const createdItem = await noteModel.createNote(userId, newNote)
             res.json(createdItem)
         } catch (e) {
             apiInternalError(res, 'Error creating note', e)
         }
     },
 
+    /**
+     * FIXME: Don't allow user to edit a note that isn't theirs!
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
     async editNote(req, res) {
         try {
             const { userId } = req.user
             
-            const note = req.body
-            const requestedUserId = note?.userId ?? null
-            const noteId = note?.id ?? null
-
-            // Limit scope to ONLY the user's own information!
-            if (userId !== requestedUserId) {
-                apiForbiddenError(res, 'Forbidden')
-                return
-            }
+            const newNote = req.body
+            const noteId = newNote?.id ?? null
 
             // Check for required fields
-            if (!note) {
+            if (!newNote) {
                 apiBadRequestError(res, 'Body required')
                 return
             }
 
-            if (!note.title) {
+            if (!newNote.title) {
                 apiBadRequestError(res, 'title is a required field in the body')
                 return
             }
 
-            if (!note.body) {
+            if (!newNote.body) {
                 apiBadRequestError(res, 'body is a required field in the body')
+                return
+            }
+
+            if (!noteId) {
+                apiBadRequestError(res, 'id is a required field in the body')
+                return
+            }
+
+            // Check that note exists, and that the userId associated with that note is the user making the call
+            const oldNote = await noteModel.getNote(noteId)
+
+            if (!oldNote) {
+                apiNotFoundError(res, 'Note does not exist')
+                return
+            }
+
+            const requestedUserId = oldNote.userId
+            
+            // Limit scope to ONLY the user's own information!
+            if (userId !== requestedUserId) {
+                apiForbiddenError(res, 'Forbidden')
                 return
             }
 
@@ -126,13 +146,18 @@ const notesController = {
                 return
             }
 
-            const editedItem = await Note.editNote(userId, noteId, note)
+            const editedItem = await noteModel.editNote(userId, noteId, newNote)
             res.json(editedItem)
         } catch (e) {
             apiInternalError(res, 'Error editing note', e)
         }
     },
 
+    /**
+     * @description Delete a note belonging to a user
+     * @param {Object} req 
+     * @param {Object} res 
+     */
     async deleteNote(req, res) {
         try {
             const { userId } = req.user
@@ -154,9 +179,15 @@ const notesController = {
                 apiBadRequestError(res, 'Note ID required')
                 return
             }
+
+            const oldNote = await noteModel.getNote(noteId)
+            if (!oldNote) {
+                apiNotFoundError(res, 'Note does not exist')
+                return
+            }
             
-            await Note.deleteNote(noteId)
-            res.send('Item deleted')
+            await noteModel.deleteNote(noteId)
+            res.send('Note deleted')
         } catch (e) {
             apiInternalError(res, 'Error deleting note', e)
         }

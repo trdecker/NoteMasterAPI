@@ -44,7 +44,8 @@ export default {
             ]
         }
         const { resources: items } = await container.items.query(querySpec).fetchAll()
-        return items
+        if (items.length === 0) return null
+        else return items.at(0)
     },
 
     /**
