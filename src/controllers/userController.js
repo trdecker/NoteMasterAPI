@@ -9,7 +9,17 @@
 import userModel from "../models/userModel.js"
 import { apiBadRequestError, apiForbiddenError } from "../utils/apiUtils.js"
 
+/**
+ * @function signup
+ * @function login
+ */
 const userController = {
+    /**
+     * 
+     * @param {Object} req 
+     * @param {Object} res 
+     * @returns 
+     */
     async signup(req, res) {
         const { body } = req
         if (!body) {
@@ -36,6 +46,12 @@ const userController = {
         res.json(result)
     },
 
+    /**
+     * 
+     * @param {Object} req 
+     * @param {Object} res 
+     * @returns 
+     */
     async login(req, res) {
         const { body } = req
         if (!body) {

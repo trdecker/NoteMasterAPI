@@ -74,12 +74,16 @@ export default {
      * @returns username, userId, and authtoken, OR null
      */
     async login(username, password) {
+        console.log('In login')
+        console.log(username, password)
         const users = await this.getUser(username)
+        console.log(users)
         if (users.length == 0) return null // Bad username
 
         const user = users.at(0)
 
         const match = await bcrypt.compare(password, user.password)
+        console.log(match)
         
         // If the password matches, return the authtoken
         if (match) {

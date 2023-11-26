@@ -48,6 +48,11 @@ const notesController = {
         }
     },
 
+    /**
+     * @description Create a note. Requires the query "userId" and a body.
+     * @param {Object} req 
+     * @param {Object} res 
+     */
     async createNote(req, res) {
         try {
             const { userId } = req.user
@@ -161,8 +166,15 @@ const notesController = {
     async deleteNote(req, res) {
         try {
             const { userId } = req.user
-            const requestedUserId = req.query.userId
             const noteId = req.query.noteId
+
+            const oldNote = await noteModel.getNote(noteId)
+            if (!oldNote) {
+                apiNotFoundError(res, 'Note does not exist')
+                return
+            }
+
+            const requestedUserId = oldNote.userId
         
             // Limit scope to ONLY the user's own information!
             if (userId !== requestedUserId) {
@@ -180,11 +192,6 @@ const notesController = {
                 return
             }
 
-            const oldNote = await noteModel.getNote(noteId)
-            if (!oldNote) {
-                apiNotFoundError(res, 'Note does not exist')
-                return
-            }
             
             await noteModel.deleteNote(noteId)
             res.send('Note deleted')
