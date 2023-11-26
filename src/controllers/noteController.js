@@ -70,15 +70,15 @@ const notesController = {
                 return
             }
 
-            if (!newNote.title) {
-                apiBadRequestError(res, 'title is a required field in the body')
-                return
-            }
+            // if (!newNote.title) {
+            //     apiBadRequestError(res, 'title is a required field in the body')
+            //     return
+            // }
 
-            if (!newNote.body) {
-                apiBadRequestError(res, 'body is a required field in the body')
-                return
-            }
+            // if (!newNote.body) {
+            //     apiBadRequestError(res, 'body is a required field in the body')
+            //     return
+            // }
 
             const createdItem = await noteModel.createNote(userId, newNote)
             res.json(createdItem)

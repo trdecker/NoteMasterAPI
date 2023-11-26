@@ -10,6 +10,7 @@ export function apiBadRequestError(res, errorMessage) {
 
 export function apiForbiddenError(res, errorMessage) {
     res.status(403).send(errorMessage)
+    console.error(errorMessage)
 }
 
 /**
@@ -20,6 +21,7 @@ export function apiForbiddenError(res, errorMessage) {
  */
 export function apiNotFoundError(res, errorMessage) {
     res.status(404).send(errorMessage)
+    console.error(errorMessage)
 }
 
 /**
