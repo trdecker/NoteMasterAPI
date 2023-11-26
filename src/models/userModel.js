@@ -3,7 +3,6 @@
  * @description Signing in and loging in
  * @author Tad Decker
  * 
- * TODO: Probably don't save passwords as plain text...
  * 11/13/2023
  */
 
