@@ -2,6 +2,7 @@
 Node endpoint running on Azure App Services. Will connect to Azure Cosmos.
 
 I wanted my note taking application, Note Master, to be able to save, edit, and delete notes saved to a backend. This is the API to fulfill that purpose!
+Check out the frontend [here](https://github.com/trdecker/NoteMaster).
 
 [Demo Video](https://youtu.be/o7QPO3cH7es)
 
@@ -15,5 +16,5 @@ VSCode. Deployed to Microsoft Azure App Services. Written in Javascript, runs on
 
 # Future Work
 
-- Full connection to NoteMaster front end
-- User authorization, basic signing up and logging in
+- Full connection to NoteMaster front end X
+- User authorization, basic signing up and logging in X
