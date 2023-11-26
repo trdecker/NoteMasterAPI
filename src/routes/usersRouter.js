@@ -4,7 +4,6 @@
  * @author Tad Decker
  * 
  * 11/13/2023
- * TODO: Login route to return AuthToken
  */
 
 import express from 'express'

@@ -93,7 +93,6 @@ const notesController = {
     },
 
     /**
-     * FIXME: Don't allow user to edit a note that isn't theirs!
      * @param {*} req 
      * @param {*} res 
      * @returns 
