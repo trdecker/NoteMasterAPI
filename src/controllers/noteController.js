@@ -25,6 +25,7 @@ const notesController = {
      */
     async getNotes(req, res) {
         try {
+            console.log('in get notes')
             const { userId } = req.user
             const requestedUserId = req.query.userId ?? null
 
@@ -93,8 +94,8 @@ const notesController = {
     },
 
     /**
-     * @param {*} req 
-     * @param {*} res 
+     * @param {Object} req 
+     * @param {Object} res 
      * @returns 
      */
     async editNote(req, res) {
@@ -165,7 +166,7 @@ const notesController = {
     async deleteNote(req, res) {
         try {
             const { userId } = req.user
-            const noteId = req.query.noteId
+            const noteId = req.query.noteId 
 
             const oldNote = await noteModel.getNote(noteId)
             if (!oldNote) {

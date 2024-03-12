@@ -1,9 +1,10 @@
-import express from 'express'
-import dotenv from 'dotenv'
+
 import notesRouter from './src/routes/notesRouter.js'
 import usersRouter from './src/routes/usersRouter.js'
-import cors from 'cors'
 import config from './src/config/config.js'
+import express from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
 
 dotenv.config()
 const port = config.port ?? 80 // Default to 80
@@ -11,11 +12,18 @@ const port = config.port ?? 80 // Default to 80
 const app = express()
 
 const corsOptions = {
-    origin: [config.devUrl],
+    origin: [...config.devUrls],
     methods: 'GET, PUT, POST, DELETE, HEAD, PATCH, OPTIONS',
     credentials: true,
     allowedHeaders: 'Content-Type, Authorization'
 }
+
+// const corsOptions2 = {
+//     origin: ['http://your-frontend-domain'],
+//     methods: 'GET, PUT, POST, DELETE, HEAD, PATCH, OPTIONS',
+//     credentials: true,
+//     allowedHeaders: 'Content-Type, Authorization',
+// };
 
 app.use(cors(corsOptions))
 
