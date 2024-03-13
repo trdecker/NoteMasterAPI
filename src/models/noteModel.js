@@ -25,7 +25,7 @@ const database = cosmosClient.database(config.databaseName)
 const container = database.container(config.notesContainerName)
 
 // Paramters for blob storage
-const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING
+// const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING
 // const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString)
 // const containerName = 'notemaster-images'
 // const containerClient = blobServiceClient.getContainerClient(containerName)

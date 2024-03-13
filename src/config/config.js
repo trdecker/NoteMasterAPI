@@ -22,5 +22,8 @@ export default {
             process.env.DEV_URL3,
             process.env.DEV_URL4
         ],
+        audience: process.env.AUDIENCE,
+        issuerBaseURL: process.env.ISSUER_BASE_URL,
+        tokenSigningAlg: process.env.TOKEN_SIGNING_ALG
         // client
     }
