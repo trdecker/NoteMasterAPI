@@ -2,8 +2,6 @@
 import notesRouter from './src/routes/notesRouter.js'
 import usersRouter from './src/routes/usersRouter.js'
 import config from './src/config/config.js'
-import express from 'express'
-import dotenv from 'dotenv'
 import cors from 'cors'
 
 dotenv.config()

@@ -166,7 +166,7 @@ const notesController = {
     async deleteNote(req, res) {
         try {
             const { userId } = req.user
-            const noteId = req.query.noteId 
+            const noteId = req.query.noteId
 
             const oldNote = await noteModel.getNote(noteId)
             if (!oldNote) {

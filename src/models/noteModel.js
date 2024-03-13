@@ -13,7 +13,7 @@
 import { generateId } from '../utils/commonUtils.js'
 import { CosmosClient } from '@azure/cosmos'
 import config from '../config/config.js'
-import { BlobServiceClient } from '@azure/storage-blob'
+// import { BlobServiceClient } from '@azure/storage-blob'
 
 const cosmosClient = new CosmosClient({ 
     endpoint: config.endpoint, 
@@ -26,27 +26,27 @@ const container = database.container(config.notesContainerName)
 
 // Paramters for blob storage
 const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING
-const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString)
-const containerName = 'notemaster-images'
-const containerClient = blobServiceClient.getContainerClient(containerName)
+// const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString)
+// const containerName = 'notemaster-images'
+// const containerClient = blobServiceClient.getContainerClient(containerName)
 
 // List all blobs in the container for debugging
-async function listBlobs() {
-  console.log('Blobs in the container:')
-  for await (const blob of containerClient.listBlobsFlat()) {
-    console.log(`- ${blob.name}`)
-  }
-}
+// async function listBlobs() {
+//   console.log('Blobs in the container:')
+//   for await (const blob of containerClient.listBlobsFlat()) {
+//     console.log(`- ${blob.name}`)
+//   }
+// }
 
-const uploadBlob = async (blobName, fileStream) => {
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName)
-    await blockBlobClient.uploadAsync(fileStream)
-    console.log(`Blob ${blobName} uploaded successfully!`)
-}
+// const uploadBlob = async (blobName, fileStream) => {
+//     const blockBlobClient = containerClient.getBlockBlobClient(blobName)
+//     await blockBlobClient.uploadAsync(fileStream)
+//     console.log(`Blob ${blobName} uploaded successfully!`)
+// }
 
-const deleteBlob = () => {
+// const deleteBlob = () => {
 
-}
+// }
 
 /**
  * @function getNote get a single note, given an id
@@ -110,13 +110,10 @@ export default {
         const { resource: createdNote } = await container.items.create(note)
         
         // Save images
-        for (const image of newNote?.images) {
-            console.log(image?.fileName && image?.data)
-
-            uploadBlob(image.fileName, image.data)
-
-
-        }
+        // for (const image of newNote?.images) {
+        //     console.log(image?.fileName && image?.data)
+        //     uploadBlob(image.fileName, image.data)
+        // }
         return createdNote
     },
 
@@ -132,13 +129,9 @@ export default {
         const { resource: createdNote } = await container.item(noteId).replace(note)
                 
         // Save images
-        for (const image of newNote?.images) {
-            console.log(image?.fileName && image?.data)
-
+        // for (const image of newNote?.images) {
             // uploadBlob(image.fileName, image.data)
-
-
-        }
+        // }
         return createdNote
     },
 
