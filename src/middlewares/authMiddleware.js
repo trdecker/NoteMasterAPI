@@ -10,10 +10,10 @@ import jwt from 'jsonwebtoken'
 
 /**
  * 
- * @param {Object} req 
- * @param {Object} res 
- * @param {Function} next 
- * @returns 
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @returns
  */
 export function requireAuth (req, res, next) {
   const token = req.headers.authorization

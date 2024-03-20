@@ -6,9 +6,8 @@
  * 11/11/2023
  */
 
-import noteModel from '../models/noteModel.js'
 import { apiBadRequestError, apiForbiddenError, apiInternalError, apiNotFoundError } from '../utils/apiUtils.js'
-
+import noteModel from '../models/noteModel.js'
 
 /**
  * @function getNotes
