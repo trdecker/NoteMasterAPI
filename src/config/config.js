@@ -1,13 +1,14 @@
 import dotenv from 'dotenv'
+import { JwksClient } from 'jwks-rsa'
 
 dotenv.config()
 
 // Create our client with the needed options
-// const client = new JwksClient({
-//     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
-//     strictSsl: true,
-//     json: true
-//   })
+const client = new JwksClient({
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+    strictSsl: true,
+    json: true
+  })
 
 export default {
         endpoint: process.env.COSMOS_ENDPOINT,
@@ -24,6 +25,6 @@ export default {
         ],
         audience: process.env.AUDIENCE,
         issuerBaseURL: process.env.ISSUER_BASE_URL,
-        tokenSigningAlg: process.env.TOKEN_SIGNING_ALG
-        // client
+        tokenSigningAlg: process.env.TOKEN_SIGNING_ALG,
+        client
     }
