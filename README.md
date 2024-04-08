@@ -18,3 +18,4 @@ VSCode. Deployed to Microsoft Azure App Services. Written in Javascript, runs on
 
 - Full connection to NoteMaster front end X
 - User authorization, basic signing up and logging in X
+- Save images and audio in Microsoft Azure Blob Storage!
